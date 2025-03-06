@@ -8,7 +8,7 @@ import {
 import { getWeatherData } from "../api/weatherapi";
 
 // Base URL for API requests
-const API_URL = "your-api-url";
+const API_URL = ""; // Replace with your actual API URL if you have one
 
 // Login user thunk
 export const loginUser = createAsyncThunk(
@@ -17,21 +17,18 @@ export const loginUser = createAsyncThunk(
     try {
       // For development/demo purposes
       if (true) {
-        // Changed from process.env.NODE_ENV check to always use mock in demo
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 500));
 
-        // Mock login - replace with actual API call in production
-        if (
-          credentials.email === "test@example.com" &&
-          credentials.password === "password"
-        ) {
-          const user = {
-            id: "user-1",
-            name: "Test User",
-            email: credentials.email,
-          };
+        // Retrieve stored users from localStorage
+        const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+        const user = storedUsers.find(
+          (user) =>
+            user.email === credentials.email &&
+            user.password === credentials.password
+        );
 
+        if (user) {
           // Store user data in localStorage for persistence
           localStorage.setItem("user", JSON.stringify(user));
           return user;
@@ -63,7 +60,6 @@ export const registerUser = createAsyncThunk(
     try {
       // For development/demo purposes
       if (true) {
-        // Changed from process.env.NODE_ENV check to always use mock in demo
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -76,14 +72,26 @@ export const registerUser = createAsyncThunk(
           return rejectWithValue("Passwords do not match");
         }
 
-        // Mock registration - replace with actual API call in production
+        // Retrieve stored users from localStorage
+        const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+        const userExists = storedUsers.some(
+          (user) => user.email === userData.email
+        );
+
+        if (userExists) {
+          return rejectWithValue("User already exists");
+        }
+
         const user = {
           id: "user-" + Date.now(),
           name: userData.name,
           email: userData.email,
+          password: userData.password, // This should be hashed in a real application
         };
 
         // Store user data in localStorage for persistence
+        storedUsers.push(user);
+        localStorage.setItem("users", JSON.stringify(storedUsers));
         localStorage.setItem("user", JSON.stringify(user));
         return user;
       }
@@ -105,55 +113,23 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+// Fetch tasks thunk
 export const fetchTasks = createAsyncThunk(
   "tasks/fetchTasks",
-  async (_, { rejectWithValue, getState }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      // Get the user from the state
-      const { auth } = getState();
-
-      // If not authenticated, reject
-      if (!auth.user) {
-        return rejectWithValue("Not authenticated");
-      }
-
       // For development/demo purposes
       if (true) {
-        // Changed from process.env.NODE_ENV check to always use mock in demo
         // Simulate API delay
         await new Promise((resolve) => setTimeout(resolve, 500));
 
-        // Return mock tasks
-        return [
-          {
-            id: "1",
-            title: "Complete project",
-            description: "Finish the Todo app project",
-            completed: false,
-            priority: "high",
-            createdAt: new Date().toISOString(),
-          },
-          {
-            id: "2",
-            title: "Learn Redux",
-            description: "Study Redux and Redux Toolkit",
-            completed: true,
-            priority: "medium",
-            createdAt: new Date().toISOString(),
-          },
-        ];
+        // Retrieve stored tasks from localStorage
+        const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        return storedTasks;
       }
 
-      // Get the token from localStorage
-      const token = localStorage.getItem("token");
-
       // Real API call for production
-      const response = await axios.get(`${API_URL}/tasks`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      const response = await axios.get(`${API_URL}/tasks`);
       return response.data;
     } catch (error) {
       return rejectWithValue(

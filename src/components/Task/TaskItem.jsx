@@ -57,9 +57,9 @@ function TaskItem({ task }) {
 
   if (isEditing) {
     return (
-      <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md mb-4 transition-colors duration-300">
+      <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-300">
         <form onSubmit={handleUpdate}>
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="block text-sm font-medium mb-1 dark:text-gray-200">
               Task Title
             </label>
@@ -68,12 +68,12 @@ function TaskItem({ task }) {
               name="title"
               value={editedTask.title}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm"
               required
             />
           </div>
 
-          <div className="mb-3">
+          <div className="mb-2">
             <label className="block text-sm font-medium mb-1 dark:text-gray-200">
               Description
             </label>
@@ -81,7 +81,7 @@ function TaskItem({ task }) {
               name="description"
               value={editedTask.description}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm"
               rows="2"
             ></textarea>
           </div>
@@ -94,7 +94,7 @@ function TaskItem({ task }) {
               name="priority"
               value={editedTask.priority}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm"
             >
               <option value="low">Low</option>
               <option value="medium">Medium</option>
@@ -103,10 +103,15 @@ function TaskItem({ task }) {
           </div>
 
           <div className="flex gap-2">
-            <Button type="submit" variant="primary">
+            <Button type="submit" variant="primary" size="sm">
               Save
             </Button>
-            <Button type="button" variant="secondary" onClick={handleCancel}>
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={handleCancel}
+            >
               Cancel
             </Button>
           </div>
@@ -118,21 +123,21 @@ function TaskItem({ task }) {
   return (
     <>
       <div
-        className={`bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md mb-4 transition-colors duration-300 ${
+        className={`bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-300 hover:shadow-md ${
           task.completed ? "opacity-70" : ""
         }`}
       >
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center flex-grow">
+        <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center flex-grow overflow-hidden">
             <input
               type="checkbox"
               checked={task.completed}
               onChange={handleToggleComplete}
-              className="mr-3 h-5 w-5 text-blue-600 dark:border-gray-600"
+              className="mr-2 h-4 w-4 text-blue-600 dark:border-gray-600 rounded"
             />
             <h3
               onClick={() => setIsDetailModalOpen(true)}
-              className={`font-medium cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 ${
+              className={`font-medium cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 text-sm truncate ${
                 task.completed
                   ? "line-through text-gray-500 dark:text-gray-400"
                   : "dark:text-white"
@@ -141,14 +146,16 @@ function TaskItem({ task }) {
               {task.title}
             </h3>
           </div>
-          <span className={`px-2 py-1 text-xs rounded-full ${priorityClass}`}>
+          <span
+            className={`ml-2 px-2 py-0.5 text-xs rounded-full ${priorityClass} whitespace-nowrap`}
+          >
             {task.priority}
           </span>
         </div>
 
         {task.description && (
           <p
-            className={`text-sm mt-2 mb-3 ml-8 ${
+            className={`text-xs mt-1 mb-2 ml-6 ${
               task.completed
                 ? "text-gray-500 dark:text-gray-400"
                 : "text-gray-700 dark:text-gray-300"
@@ -158,25 +165,30 @@ function TaskItem({ task }) {
           </p>
         )}
 
-        <div className="flex justify-between items-center mt-3">
+        <div className="flex justify-between items-center mt-2 pt-1 border-t border-gray-100 dark:border-gray-700">
           <span className="text-xs text-gray-500 dark:text-gray-400">
             {formatDate(task.createdAt)}
           </span>
 
-          <div className="flex gap-2">
-            <Button
-              size="sm"
-              variant="ghost"
+          <div className="flex gap-1">
+            <button
               onClick={() => setIsDetailModalOpen(true)}
+              className="text-xs text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 py-1 px-2"
             >
               View
-            </Button>
-            <Button size="sm" variant="secondary" onClick={handleEdit}>
+            </button>
+            <button
+              onClick={handleEdit}
+              className="text-xs text-gray-600 hover:text-yellow-600 dark:text-gray-400 dark:hover:text-yellow-400 py-1 px-2"
+            >
               Edit
-            </Button>
-            <Button size="sm" variant="danger" onClick={handleDelete}>
+            </button>
+            <button
+              onClick={handleDelete}
+              className="text-xs text-gray-600 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 py-1 px-2"
+            >
               Delete
-            </Button>
+            </button>
           </div>
         </div>
       </div>

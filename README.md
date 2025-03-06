@@ -1,5 +1,13 @@
 # Modern Todo Application
 
+## 📸 Screenshots
+
+[Add your application screenshots here]
+
+## 🎥 Demo Video
+
+[Add your demo video link here]
+
 A feature-rich task management application built with React, Redux Toolkit, and TailwindCSS.
 
 ## 🚀 Features
@@ -128,14 +136,6 @@ cp .env.example .env
 ```bash
 npm run dev
 ```
-
-## 📸 Screenshots
-
-[Add your application screenshots here]
-
-## 🎥 Demo Video
-
-[Add your demo video link here]
 
 ## 🤝 Contributing
 
