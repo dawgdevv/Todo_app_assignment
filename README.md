@@ -122,14 +122,16 @@ git clone <repository-url>
 2. Install dependencies
 
 ```bash
-cd
+cd Todo_app_assignment
 npm install
 ```
 
 3. Set up environment variables
 
 ```bash
-cp .env.example .env
+touch .env
+VITE_OPEN_WEATHER_API="your-api-key" #paste this as it is and replace your-api-key with your OpenWeatherMap API key
+
 # Edit .env with your OpenWeatherMap API key
 ```
 
