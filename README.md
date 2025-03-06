@@ -81,8 +81,10 @@ todo-app/
    - Register: User registration form
 
 3. **Layout**
-   - Header: Navigation and theme toggle
-   - Footer: Application footer
+
+- Header: Navigation bar
+- Sidebar: Sidebar navigation #Mobile view
+- Footer: Application footer
 
 ## 🔨 Implementation Details
 
