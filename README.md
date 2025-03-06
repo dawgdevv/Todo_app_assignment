@@ -36,7 +36,6 @@
 
 - **Theme System**
 
-  - Light/Dark mode toggle
   - Persistent theme preference
   - System theme detection
 
