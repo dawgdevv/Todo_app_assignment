@@ -2,13 +2,15 @@
 
 ## 📸 Screenshots
 
-[Add your application screenshots here]
+![alt text](image.png)
+![alt text](image-1.png)
 
-## 🎥 Demo Video
+### Mobile View
 
-[Add your demo video link here]
-
-A feature-rich task management application built with React, Redux Toolkit, and TailwindCSS.
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
 
 ## 🚀 Features
 
@@ -120,7 +122,7 @@ git clone <repository-url>
 2. Install dependencies
 
 ```bash
-cd todo-app
+cd
 npm install
 ```
 
